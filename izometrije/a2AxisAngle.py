@@ -9,6 +9,7 @@ def orientation(u,up,p):
 
 def norm(p):
     s = np.sqrt(sum([x*x for x in p]))
+    # print(p)
     p = [x/s for x in p]
     return p
 
@@ -40,6 +41,9 @@ def A2AxisAngle(A):
     
     Ae = A - np.eye(3,3)
     p = np.cross(Ae[0],Ae[1])
+
+    if p[0] == 0 and p[1] == 0 and p[2] == 0:
+        p = np.cross(Ae[1],Ae[2])
     
     if not isNorm(p):
         p = norm(p)
@@ -60,5 +64,5 @@ def A2AxisAngle(A):
 np.set_printoptions(precision=5,suppress=True)
 	
 	
-A = np.array([[1,0,0], [0,1,0], [0,0,1]])
+A = np.array([[1,0,0], [0,np.cos(np.pi/4),np.sin(np.pi/4)], [0,-np.sin(np.pi/4),np.cos(np.pi/4)]])
 print(A2AxisAngle(A))
